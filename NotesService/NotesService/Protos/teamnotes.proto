@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+option csharp_namespace = "NotesService";
+
+package teamnotes;
+
+service TeamNotes {
+	rpc ValidateTeam (ValidateTeamRequest) returns (ValidateTeamReply);
+  rpc StoreNote (StoreTeamNoteRequest) returns (StoreTeamNoteReply);
+  rpc GetStoredNotes (GetStoredNotesRequest) returns (GetStoredNotesReply);
+}
+
+message ValidateTeamRequest {
+  string token = 1;
+  string team_name = 2;
+}
+
+message ValidateTeamReply {
+  bool success = 1;
+  string message = 2;
+  string owner = 3;
+  string team_name = 4;
+}
+
+message StoreTeamNoteRequest {
+  string token = 1;
+  string title = 2;
+  string content = 3;
+  string team_name = 4;
+}
+
+message StoreTeamNoteReply {
+  bool success = 1;
+  string message = 2;
+  string note_id = 3;
+  string owner = 4;
+  string created_at_utc = 5;
+  string team_name = 6;
+}
+
+message GetStoredNotesRequest {
+  string token = 1;
+  string team_name = 2;
+}
+
+message TeamNote {
+  string note_id = 1;
+  string title = 2;
+  string content = 3;
+  string created_at_utc = 4;
+  string team_name = 5;
+}
+
+message GetStoredNotesReply {
+  bool success = 1;
+  string message = 2;
+  string owner = 3;
+  repeated TeamNote notes = 4;
+  string team_name = 5;
+}
